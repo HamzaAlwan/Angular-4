@@ -5,19 +5,22 @@ const session = require('express-session')
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 const Promise = require('bluebird');
+const path = require('path');
 const socketIO = require('socket.io')
 
 const app = express();
 
-
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
- app.use(express.static(__dirname + '/../src'));
- app.use(express.static(__dirname + '/node_modules'));
 
 
+app.use(express.static(path.join(__dirname,'../dist/my-app')))
+app.use(express.static(__dirname + '../node_modules'));
 
+app.get('/',(req,res)=> {
+    res.sendFile(path.join(__dirname, '../dist/my-app/index.html'))
+})
 
 
 
@@ -28,5 +31,5 @@ const server = app
 .use((req, res) => res.render('index') )
 .listen(port, () => console.log(`Listening on ${ port }`));
 
-const io = socketIO(app)
+// const io = socketIO(app)
 
