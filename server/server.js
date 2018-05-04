@@ -22,11 +22,10 @@ app.get('/',(req,res)=> {
     res.sendFile(path.join(__dirname, '../dist/my-app/index.html'))
 });
 
- 
 const port = process.env.PORT || 3000;
 
 const server = app
-.use((req, res) => res.render('index') )
+.use((req, res) => res.render('index'))
 .listen(port, () => console.log(`Listening on ${ port }`));
 
 // const io = socketIO(app)
