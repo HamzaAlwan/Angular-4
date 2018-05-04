@@ -5,16 +5,21 @@ const db = require('../database.js');
 const groupSchema = new Schema({
     rooms:  [String],
     admin: String,
-    name:   {type: String, unique: true},
-    allowed: [String]
+    groupName:   {type: String, unique: true},
+    allowed: [String],
+    created_at: {type:Date, default:Date.now}
   });
 
 const Group = mongoose.model('Group', groupSchema);
 
-let saveGroup = function (data, callback){
-  let group = Group(data);
-    group.save();
-}
+let saveGroup =  (groupData, callback) => {
+  Group.create(groupData, callback);
+};
+
+let findGroup = (groupName, callback) => {
+  Group.findOne({groupName: groupName}, callback);
+};
 
 module.exports.Group = Group;
 module.exports.saveGroup = saveGroup;
+module.exports.findGroup = findGroup;
