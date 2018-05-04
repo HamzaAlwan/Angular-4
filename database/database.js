@@ -12,30 +12,20 @@ db.once('open', function() {
 });
 
 const userSchema = new Schema({
-    title:  String,
-    author: String,
-    body:   String,
-    comments: [{ body: String, date: Date }],
-    date: { type: Date, default: Date.now },
-    hidden: Boolean,
-    meta: {
-      votes: Number,
-      favs:  Number
-    }
+    name:  String,
+    password: String,
+    friends:   [String],
+    messages: [{to : String , message: [String]}],
+    online: Boolean,
+    groups:[String]
   });
 
-  const roomSchema = new Schema({
-    title:  String,
-    author: String,
-    body:   String,
-    comments: [{ body: String, date: Date }],
-    date: { type: Date, default: Date.now },
-    hidden: Boolean,
-    meta: {
-      votes: Number,
-      favs:  Number
-    }
+  const groupSchema = new Schema({
+    rooms:  [String],
+    admin: String,
+    name:   String,
+    allowed: [String]
   });
 
   const User = mongoose.model('User', userSchema);
-  const Room = mongoose.model('Room', roomSchema);
+  const Group = mongoose.model('Group', groupSchema);
